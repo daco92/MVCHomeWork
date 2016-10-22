@@ -3,10 +3,21 @@ namespace MVCHomeWork.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+    using System.Linq;
+
     [MetadataType(typeof(客戶聯絡人MetaData))]
-    public partial class 客戶聯絡人
+    public partial class 客戶聯絡人:IValidatableObject
     {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            CustomerEntities db = new CustomerEntities();
+            var existdata = db.客戶聯絡人.Where(c => c.Email == Email);
+            if (existdata.Any())
+            {
+                yield return new ValidationResult(
+                "同一個客戶下的聯絡人，其 Email 不能重複", new[] { "Email" });
+            }
+        }
     }
     
     public partial class 客戶聯絡人MetaData
