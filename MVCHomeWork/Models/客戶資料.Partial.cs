@@ -25,6 +25,7 @@ namespace MVCHomeWork.Models
         
         [StringLength(50, ErrorMessage="欄位長度不得大於 50 個字元")]
         [Required]
+        [RegularExpression(@"\d{4}-\d{6}",ErrorMessage = "格式錯誤，請輸入類似0911-111111之格式")]
         public string 電話 { get; set; }
         
         [StringLength(50, ErrorMessage="欄位長度不得大於 50 個字元")]
