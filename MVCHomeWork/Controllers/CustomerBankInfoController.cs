@@ -14,14 +14,14 @@ namespace MVCHomeWork.Controllers
         // GET: CustomerBankInfo
         public ActionResult Index()
         {
-            var 客戶銀行資訊 = db.客戶銀行資訊.Include(客 => 客.客戶資料);
+            var 客戶銀行資訊 = db.客戶銀行資訊.Include(客 => 客.客戶資料).Where(c => c.is刪除 != true);
             return View(客戶銀行資訊.ToList());
         }
 
         [HttpPost]
         public ActionResult Index(string search)
         {
-            var 客戶銀行資訊 = db.客戶銀行資訊.Include(客 => 客.客戶資料).Where(s => s.銀行名稱.Contains(search));
+            var 客戶銀行資訊 = db.客戶銀行資訊.Include(客 => 客.客戶資料).Where(s => s.銀行名稱.Contains(search)).Where(c => c.is刪除 != true);
             return View(客戶銀行資訊.ToList());
         }
 
@@ -119,7 +119,8 @@ namespace MVCHomeWork.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Find(id);
-            db.客戶銀行資訊.Remove(客戶銀行資訊);
+            //db.客戶銀行資訊.Remove(客戶銀行資訊);
+            客戶銀行資訊.is刪除 = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

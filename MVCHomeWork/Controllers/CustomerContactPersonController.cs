@@ -14,14 +14,14 @@ namespace MVCHomeWork.Controllers
         // GET: CustomerContactPerson
         public ActionResult Index()
         {
-            var 客戶聯絡人 = db.客戶聯絡人.Include(c => c.客戶資料);
+            var 客戶聯絡人 = db.客戶聯絡人.Include(c => c.客戶資料).Where(c => c.is刪除 != true);
             return View(客戶聯絡人.ToList());
         }
 
         [HttpPost]
         public ActionResult Index(string search)
         {
-            var 客戶聯絡人 = db.客戶聯絡人.Include(c => c.客戶資料).Where(s => s.姓名.Contains(search));
+            var 客戶聯絡人 = db.客戶聯絡人.Include(c => c.客戶資料).Where(s => s.姓名.Contains(search)).Where(c => c.is刪除 != true);
             return View(客戶聯絡人.ToList());
         }
 
@@ -119,7 +119,8 @@ namespace MVCHomeWork.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Find(id);
-            db.客戶聯絡人.Remove(客戶聯絡人);
+            //db.客戶聯絡人.Remove(客戶聯絡人);
+            客戶聯絡人.is刪除 = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
