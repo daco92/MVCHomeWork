@@ -1,9 +1,10 @@
 namespace MVCHomeWork.Models
 {
+    using Attribute;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     [MetadataType(typeof(客戶銀行資訊MetaData))]
     public partial class 客戶銀行資訊
     {
@@ -19,7 +20,11 @@ namespace MVCHomeWork.Models
         [StringLength(50, ErrorMessage="欄位長度不得大於 50 個字元")]
         [Required]
         public string 銀行名稱 { get; set; }
-        [Required]
+        //[RegularExpression(@"([0-9]+)", ErrorMessage = "只允許輸入數字!")]
+        //[Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
+        //[Required]
+        //[Range(0, Int32.MaxValue, ErrorMessage = "Invalid Number")]
+        //[IsNumericAttribute]
         public int 銀行代碼 { get; set; }
         public Nullable<int> 分行代碼 { get; set; }
         

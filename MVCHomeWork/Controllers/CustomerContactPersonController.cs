@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MVCHomeWork.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using MVCHomeWork.Models;
 
 namespace MVCHomeWork.Controllers
 {
@@ -18,6 +15,13 @@ namespace MVCHomeWork.Controllers
         public ActionResult Index()
         {
             var 客戶聯絡人 = db.客戶聯絡人.Include(c => c.客戶資料);
+            return View(客戶聯絡人.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult Index(string search)
+        {
+            var 客戶聯絡人 = db.客戶聯絡人.Include(c => c.客戶資料).Where(s => s.姓名.Contains(search));
             return View(客戶聯絡人.ToList());
         }
 
@@ -44,7 +48,7 @@ namespace MVCHomeWork.Controllers
         }
 
         // POST: CustomerContactPerson/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,7 +82,7 @@ namespace MVCHomeWork.Controllers
         }
 
         // POST: CustomerContactPerson/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
